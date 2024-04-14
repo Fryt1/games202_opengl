@@ -33,10 +33,10 @@ void processInput(GLFWwindow *window);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 // void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
 
-int isInform = 0; // 是否需要输出当前状态信息
-int isCameraRotate = 0; // 当前摄像机是否需要旋转
+int isInform = 1; // 是否需要输出当前状态信息
+int isCameraRotate = 1; // 当前摄像机是否需要旋转
 
-Camera_Movement movementNow = STILLNESS;
+Camera_Movement movementNow = BACKWARD;
 
 // 简化main函数过程
 CPipeline getLightPipeline(string lightVShader_path, string lightFShader_path);
