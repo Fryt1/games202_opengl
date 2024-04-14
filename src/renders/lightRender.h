@@ -1,10 +1,10 @@
 #ifndef MYWORK_LIGHTRENDER_H
 #define MYWORK_LIGHTRENDER_H
 
-#include "mesh.h"
-#include "material.h"
-#include "pipeline.h"
-#include "light.h"
+#include "objects/mesh.h"
+#include "material/material.h"
+#include "gl/pipeline.h"
+#include "objects/light.h"
 
 class CLightRender
 {

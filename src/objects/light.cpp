@@ -1,4 +1,4 @@
-#include "light.h"
+#include "objects/light.h"
 
 CLight::CLight(float _intensity, glm::vec3 _position, glm::vec3 _color)
 {

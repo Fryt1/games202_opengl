@@ -1,12 +1,12 @@
 #ifndef MYWORK_PIPELINE_H
 #define MYWORK_PIPELINE_H
 
-#include "shader.h"
+#include "gl/shader.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glad/glad.h>
-#include "mesh.h"
+#include "objects/mesh.h"
 
 class CPipeline
 {

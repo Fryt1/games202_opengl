@@ -11,8 +11,8 @@
 #include <vector>
 #include <winsmcrd.h>
 
-#include "sceneRender.h"
-#include "pipeline.h"
+#include "renders/sceneRender.h"
+#include "gl/pipeline.h"
 
 using namespace std;
 

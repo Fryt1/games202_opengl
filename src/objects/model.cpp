@@ -1,4 +1,4 @@
-#include "model.h"
+#include "objects/model.h"
 
 #include <iostream>
 #include <glad/glad.h>

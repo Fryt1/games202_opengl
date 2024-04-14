@@ -1,4 +1,4 @@
-#include "lightRender.h"
+#include "renders/lightRender.h"
 
 CLightRender::CLightRender()
 {

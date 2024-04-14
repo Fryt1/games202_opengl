@@ -7,7 +7,7 @@
 CXX = g++
 
 # define any compile-time flags
-CXXFLAGS	:= -std=c++17 -Wall -Wextra -g 
+CXXFLAGS	:= -std=c++17 -Wall -Wextra -g -DDEBUG
 
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
@@ -21,7 +21,7 @@ OUTPUT	:= ./build/output
 SRC		:= ./ ./src/camera ./src/gl ./src/objects ./src/material ./src/renders
 
 # define include directory
-INCLUDE	:= ./include ./src/camera ./src/gl ./src/objects ./src/material ./src/renders
+INCLUDE	:= ./include ./src
 
 # define lib directory
 LIB		:= ./lib
@@ -85,6 +85,12 @@ $(MAIN): $(OBJECTS)
 
 .PHONY: clean 
 
+
+release: CFLAGS = -std=c++17 -Wall -Wextra -O2 
+release: all
+
+debug: CFLAGS = -std=c++17 -Wall -Wextra -g -DDEBUG
+debug: all
 
 clean:
 	$(RM) $(OUTPUTMAIN)

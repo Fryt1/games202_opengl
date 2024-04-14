@@ -1,9 +1,9 @@
 #ifndef MYWORK_LIGHT_H
 #define MYWORK_LIGHT_H
 
-#include "mesh.h"
-#include "material.h"
-#include "pipeline.h"
+#include "objects/mesh.h"
+#include "material/material.h"
+#include "gl/pipeline.h"
 
 class CLight
 {

@@ -1,12 +1,12 @@
 #ifndef MYWORK_SCENERENDER_H
 #define MYWORK_SCENERENDER_H
 
-#include "model.h"
-#include "light.h"
-#include "pipeline.h"
-#include "camera.h"
-#include "meshRender.h"
-#include "lightRender.h"
+#include "objects/model.h"
+#include "objects/light.h"
+#include "gl/pipeline.h"
+#include "camera/camera.h"
+#include "renders/meshRender.h"
+#include "renders/lightRender.h"
 
 class CSceneRender
 {

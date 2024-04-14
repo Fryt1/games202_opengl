@@ -2,9 +2,9 @@
 #define MYWORK_MODEL_H
 
 #include <vector>
-#include "mesh.h"
-#include "material.h"
-#include "pipeline.h"
+#include "objects/mesh.h"
+#include "material/material.h"
+#include "gl/pipeline.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>

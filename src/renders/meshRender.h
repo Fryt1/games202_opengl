@@ -1,11 +1,11 @@
 #ifndef MYWORK_MESHRENDER_H
 #define MYWORK_MESHRENDER_H
 
-#include "mesh.h"
-#include "material.h"
-#include "pipeline.h"
-#include "light.h"
-#include "camera.h"
+#include "objects/mesh.h"
+#include "material/material.h"
+#include "gl/pipeline.h"
+#include "objects/light.h"
+#include "camera/camera.h"
 
 class CMeshRender
 {

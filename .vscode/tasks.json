@@ -12,21 +12,21 @@
                 "command": "powershell",
                 "args": [
                     "-c",
-                    "mingw32-make"
+                    "mingw32-make debug"
                 ]
             },
             "linux": {
                 "command": "bash",
                 "args": [
                     "-c",
-                    "make"
+                    "make debug"
                 ]
             },
             "osx": {
                 "command": "bash",
                 "args": [
                     "-c",
-                    "make"
+                    "make debug"
                 ]
             }
         },
@@ -79,6 +79,35 @@
                     "'make clean'"
                 ]
             }
-        }
+        },
+        {
+            "label": "release",
+            "type": "shell",
+            "windows": {
+                "command": "powershell",
+                "args": [
+                    "-c",
+                    "'mingw32-make release'",
+
+                ]
+            },
+            "linux": {
+                "command": "bash",
+                "args": [
+                    "-c",
+                    "'make release'",
+
+                ]
+            },
+            "osx": {
+                "command": "bash",
+                "args": [
+                    "-c",
+                    "'make release'",
+
+                ]
+            }
+        },
+        
     ]
 }
