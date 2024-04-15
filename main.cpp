@@ -29,12 +29,15 @@ bool firstMouse = true;
 float xoffset = 0;
 float yoffset = 0;
 
+float xoffset_last = 0;
+
+
 void processInput(GLFWwindow *window);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-// void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
+void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
 
 int isInform = 1; // 是否需要输出当前状态信息
-int isCameraRotate = 1; // 当前摄像机是否需要旋转
+int isCameraRotate = 0; // 当前摄像机是否需要旋转
 
 Camera_Movement movementNow = BACKWARD;
 
@@ -65,7 +68,7 @@ int main()
     // 完成窗口交互函数的绑定 
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    // glfwSetCursorPosCallback(window, mouse_callback);
+     glfwSetCursorPosCallback(window, mouse_callback);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -130,7 +133,8 @@ int main()
         float camY = cos(glfwGetTime()* 0.4 * 2) * 150;
         float camZ = cos(glfwGetTime()* 0.2 * 2) * 100;
         scene.setModelMatrixLight(scene.getModelMatrix(glm::vec3(camX, camY, camZ), (float)glfwGetTime(), glm::vec3(0,1,0), glm::vec3(1,1,1)));
-        scene.setModelMatrixModel(scene.getModelMatrix(glm::vec3(0, 0, 0), 0, glm::vec3(0,0,1), glm::vec3(52,52,52)));
+        glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f),xoffset_last , glm::vec3(0.0f, 1.0f, 0.0f));
+        scene.setModelMatrixModel(rotationMatrix* scene.getModelMatrix(glm::vec3(0, 0, 0), 0, glm::vec3(0,0,1), glm::vec3(52,52,52)));
         scene.setViewMatrix(scene.getViewMatrix(0));
         scene.setProjectionMatrix(scene.getProjectionMatrix(75, SCR_WIDTH/SCR_HEIGHT, 0.1, 1000));
 
@@ -163,22 +167,7 @@ int main()
         //     isCameraRotate = 0;
         // }
 
-        if (isCameraRotate == 1){
-            scene.cameras[0].updateByPitch();
-            isCameraRotate = 0;
-        }
-        if (isCameraRotate == 2){
-            scene.cameras[0].updateByPitchNeg();
-            isCameraRotate = 0;
-        }
-        if (isCameraRotate == 3){
-            scene.cameras[0].updateByYaw();
-            isCameraRotate = 0;
-        }
-        if (isCameraRotate == 4){
-            scene.cameras[0].updateByYawNeg();
-            isCameraRotate = 0;
-        }
+
 
         // 绘制
         scene.draw(lightPipe_id, phongPipe_id);
@@ -204,14 +193,13 @@ void processInput(GLFWwindow *window)
         movementNow = RIGHT;
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
         isInform = 1;
-    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)  
+
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
         isCameraRotate = 1;
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)  
-        isCameraRotate = 2;
-    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)  
-        isCameraRotate = 4;
-    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)  
-        isCameraRotate = 3;
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE)
+        isCameraRotate = 0;
+        
+
 
 }
 
@@ -224,7 +212,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 {
-    isCameraRotate = 1;
 
     float xpos = static_cast<float>(xposIn);
     float ypos = static_cast<float>(yposIn);
@@ -235,14 +222,28 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
         lastY = ypos;
         firstMouse = false;
     }
+    if(isCameraRotate ==1){
 
-    xoffset = xpos - lastX;
-    yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+        xoffset = xpos - lastX;
+        yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
 
-    lastX = xpos;
-    lastY = ypos;
+        lastX = xpos;
+        lastY = ypos;
+
+        float sensitivity = 0.05f;
+        xoffset *= sensitivity;
+        yoffset *= sensitivity;
+
+        xoffset_last+=xoffset;
+
+    }
+
+
+
 
 }
+
+
 
 CPipeline getLightPipeline(string lightVShader_path, string lightFShader_path)
 {
