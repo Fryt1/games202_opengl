@@ -12,7 +12,8 @@
                 "command": "powershell",
                 "args": [
                     "-c",
-                    "mingw32-make debug"
+                    "'mingw32-make -j6 -k debug'"
+
                 ]
             },
             "linux": {
@@ -87,7 +88,7 @@
                 "command": "powershell",
                 "args": [
                     "-c",
-                    "'mingw32-make release'",
+                    "'mingw32-make -j6 -k release'",
 
                 ]
             },
@@ -108,6 +109,37 @@
                 ]
             }
         },
+
+        {
+            "label": "cleanobj",
+            "type": "shell",
+            "windows": {
+                "command": "powershell",
+                "args": [
+                    "-c",
+                    "'mingw32-make cleanobj'"
+                ]
+            },
+            "linux": {
+                "command": "bash",
+                "args": [
+                    "-c",
+                    "'make cleanobj'"
+                ]
+            },
+            "osx": {
+                "command": "bash",
+                "args": [
+                    "-c",
+                    "'make cleanobj'"
+                ]
+            }
+        },
+        {
+            "label": "release & cleanobj",
+            "dependsOn": ["release", "cleanobj"],
+            "dependsOrder": "sequence"
+        }
         
     ]
 }
