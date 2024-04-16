@@ -1,4 +1,4 @@
-attribute vec3 aVertexPosition;
+in vec3 aVertexPosition;
 
 uniform mat4 uModelViewMatrix;
 uniform mat4 uProjectionMatrix;

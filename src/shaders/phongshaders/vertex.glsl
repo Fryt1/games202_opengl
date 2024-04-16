@@ -1,23 +1,25 @@
 #version 330 core
-attribute vec3 aVertexPosition;
-attribute vec3 aNormalPosition;
-attribute vec2 aTextureCoord;
+in vec3 aVertexPosition;
+in vec3 aNormalPosition;
+in vec2 aTextureCoord;
 
 uniform mat4 uModelViewMatrix;
+uniform mat4 uModelMatrix;
 uniform mat4 uProjectionMatrix;
+uniform mat3 uModelToWorldNormalMatrix;
 
-varying highp vec2 vTextureCoord;
-varying highp vec3 vFragPos;
-varying highp vec3 vNormal;
-
+out highp vec2 vTextureCoord;
+out highp vec3 vFragPos_WS;
+out highp vec3 vNormal_WS;
 
 void main(void) {
 
-  vFragPos = aVertexPosition;
-  vNormal = aNormalPosition;
+  vFragPos_WS = (uModelMatrix * vec4(aVertexPosition, 1.0)).xyz;
 
-  gl_Position = uProjectionMatrix * uModelViewMatrix * vec4(aVertexPosition, 1.0);
+  vNormal_WS = uModelToWorldNormalMatrix * aNormalPosition;
 
   vTextureCoord = aTextureCoord;
+
+  gl_Position = uProjectionMatrix * uModelViewMatrix * vec4(aVertexPosition, 1.0);
 
 }

@@ -128,13 +128,15 @@ int main()
         glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         // 设置一下场景内全局MVP
-        
+
         scene.setModelMatrixLight(glm::mat4(1.0f));
         glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f),xoffset_last , glm::vec3(0.0f, 1.0f, 0.0f));
         scene.setModelMatrixModel(rotationMatrix* scene.getModelMatrix(glm::vec3(0, 0, 0), 0, glm::vec3(0,0,1), glm::vec3(52,52,52)));
         scene.setViewMatrix(scene.getViewMatrix(0));
         scene.setProjectionMatrix(scene.getProjectionMatrix(75, SCR_WIDTH/SCR_HEIGHT, 0.1, 1000));
 
+        // 更新光源位置
+        //scene.lights[0].setPosition(glm::vec3(camX, camY, camZ));
 
         // 更新摄像机位置 这边暂时只考虑单摄像机处理情况
         if (movementNow != STILLNESS){

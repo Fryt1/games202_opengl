@@ -22,6 +22,7 @@ class CSceneRender
     glm::mat4 modelMatrix_model;
     glm::mat4 viewMatrix;
     glm::mat4 projectionMatrix;
+    glm::mat3 modelMatrix_normal;
 
     CSceneRender(); // 默认初始 什么都不干
 
@@ -39,6 +40,7 @@ class CSceneRender
     void setModelMatrixModel(const glm::mat4 &_m);
     void setViewMatrix(const glm::mat4 &_m);
     void setProjectionMatrix(const glm::mat4 &_m);
+    void setModelMatrixNormal(const glm::mat4 &_m);
 
 
     // 渲染启动接口

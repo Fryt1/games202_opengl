@@ -37,6 +37,13 @@ void CMeshRender::bindUniform_mvp(const glm::mat4 &model, const glm::mat4 &view,
 {
     pipeline.setMat4("uModelViewMatrix", view * model); // 传入mv一起作用的矩阵
     pipeline.setMat4("uProjectionMatrix", projection);
+    pipeline.setMat4("uModelMatrix", model); // 传入m矩阵
+
+}
+void CMeshRender::bindUniform_modelToWorld_normal(const glm::mat3 &modeltoworld_normal)
+{
+    pipeline.setMat3("uModelToWorldNormalMatrix", modeltoworld_normal);//传入法线矩阵
+
 }
 
 void CMeshRender::bindUniform_camera(const CCamera &camera)

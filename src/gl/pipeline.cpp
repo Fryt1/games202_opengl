@@ -13,6 +13,7 @@ CPipeline::CPipeline(const CShader &_vertexShader, const CShader &_fragmentShade
     fragmentShader = _fragmentShader;
     glAttachShader(_id, _vertexShader.id);
     glAttachShader(_id, _fragmentShader.id);
+    glBindFragDataLocation(_id, 0, "FragColor");
     glLinkProgram(_id);
 
     texture_id = 0;

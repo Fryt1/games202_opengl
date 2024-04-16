@@ -55,6 +55,15 @@ void CSceneRender::setModelMatrixLight(const glm::mat4 &_m)
 void CSceneRender::setModelMatrixModel(const glm::mat4 &_m)
 {
     modelMatrix_model = _m;
+    setModelMatrixNormal(modelMatrix_model);
+}
+
+void CSceneRender::setModelMatrixNormal(const glm::mat4 &_m)
+{
+
+    glm::mat3 mat3 = glm::mat3(_m);
+    modelMatrix_normal = glm::determinant(mat3)*glm::inverse(mat3);
+    modelMatrix_normal = glm::transpose(modelMatrix_normal);
 }
 
 void CSceneRender::setViewMatrix(const glm::mat4 &_m)
@@ -98,6 +107,7 @@ void CSceneRender::modelRendering(unsigned int model_id, unsigned int pipeline_i
         meshRender.bindAttributeData();
         // 绑定各种unifrom数据
         meshRender.bindUniform_mvp(modelMatrix_model, viewMatrix, projectionMatrix); // MVP
+        meshRender.bindUniform_modelToWorld_normal(modelMatrix_normal); // 法线矩阵
         meshRender.bindUniform_camera(cameras[0]); // 相机 默认首位相机
         meshRender.bindUniform_light(lights); // 目前 meshRender还只赋值一个光源属性
         meshRender.bindUniform_material(material); // 材质属性

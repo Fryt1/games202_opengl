@@ -30,6 +30,8 @@ class CMeshRender
 
     void bindUniform_mvp(const glm::mat4 &model, const glm::mat4 &view, const glm::mat4 &projection); // 绑定uniform mvp矩阵
 
+    void bindUniform_modelToWorld_normal(const glm::mat3 &modeltoworld_normal); // 绑定法线矩阵
+
     void bindUniform_camera(const CCamera &camera); // 绑定摄像机相关属性
 
     void bindUniform_light(const vector<CLight> &lights); // 绑定光源类相关属性 存在多光源的情况
