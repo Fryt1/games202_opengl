@@ -73,7 +73,6 @@ int main()
 
     // 完成窗口交互函数的绑定 
     glfwMakeContextCurrent(window);
-
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
 
@@ -149,13 +148,13 @@ int main()
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-
+        
 
         float currentFrame = static_cast<float>(glfwGetTime());
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        processInput(window);
+        
         glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         // 设置一下场景内全局MVP
@@ -192,14 +191,16 @@ int main()
         if (ImGui::Button("Save"));
         ImGui::InputText("string", buf, IM_ARRAYSIZE(buf));
         ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
+        processInput(window);
         ImGui::End();
-
+        
         // Rendering
         ImGui::Render();
         int display_w, display_h;
         glfwGetFramebufferSize(window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
         glClear(GL_COLOR_BUFFER_BIT);
+        
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         // 绘制
@@ -238,12 +239,18 @@ void processInput(GLFWwindow *window)
         movementNow = RIGHT;
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
         isInform = 1;
-
-    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
-        isCameraRotate = 1;
-    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE)
+    if (ImGui::IsWindowHovered() || ImGui::IsAnyItemHovered())
+    {
         isCameraRotate = 0;
-        
+    }
+    else
+    {
+
+        if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+            isCameraRotate = 1;
+        if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE)
+            isCameraRotate = 0;
+    }
 
 
 }
@@ -254,6 +261,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
 }
+
+
 
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 {
