@@ -18,10 +18,10 @@ LFLAGS =
 OUTPUT	:= ./build/output
 
 # define source directory
-SRC		:= ./ ./src/camera ./src/gl ./src/objects ./src/material ./src/renders
+SRC		:= ./ ./src/camera ./src/gl ./src/objects ./src/material ./src/renders ./include/imgui ./include/imgui/backends
 
 # define include directory
-INCLUDE	:= ./include ./src
+INCLUDE	:= ./include ./src ./include/imgui 
 
 # define lib directory
 LIB		:= ./lib

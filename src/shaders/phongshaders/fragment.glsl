@@ -16,7 +16,7 @@ in highp vec3 vNormal_WS;
 
 out vec4 FragColor;
 
-void main(void) {
+void main() {
   vec3 color;
   if (uTextureSample == 1) {
     color = pow(texture2D(uSampler, vTextureCoord).rgb, vec3(2.2));

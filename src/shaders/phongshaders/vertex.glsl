@@ -12,7 +12,7 @@ out highp vec2 vTextureCoord;
 out highp vec3 vFragPos_WS;
 out highp vec3 vNormal_WS;
 
-void main(void) {
+void main() {
 
   vFragPos_WS = (uModelMatrix * vec4(aVertexPosition, 1.0)).xyz;
 

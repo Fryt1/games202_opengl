@@ -13,6 +13,9 @@
 
 #include "renders/sceneRender.h"
 #include "gl/pipeline.h"
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_glfw.h"
+#include "imgui/imgui_impl_opengl3.h"
 
 using namespace std;
 
@@ -56,7 +59,10 @@ int main()
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "MyWork0", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Games202", NULL, NULL);
+
+
+
 
     if (window == NULL)
     {
@@ -67,8 +73,23 @@ int main()
 
     // 完成窗口交互函数的绑定 
     glfwMakeContextCurrent(window);
+
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-     glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetCursorPosCallback(window, mouse_callback);
+
+    // Setup Dear ImGui context----------------------------
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+    //io.ConfigFlags |= ImGuiConfigFlags_None;         // IF using Docking Branch
+
+    // Setup Platform/Renderer backends
+    ImGui_ImplGlfw_InitForOpenGL(window, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
+    ImGui_ImplOpenGL3_Init();
+
+    // Setup Dear ImGui style--------------------------------
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -117,9 +138,19 @@ int main()
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
 
+    bool show_demo_window = true;
+
     while (!glfwWindowShouldClose(window))
     {
-        
+        //----------------------------------------------------------------------------------
+        // (Your code calls glfwPollEvents())
+        // ...
+        // Start the Dear ImGui frame
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+
         float currentFrame = static_cast<float>(glfwGetTime());
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
@@ -145,6 +176,7 @@ int main()
         }
         
 
+        
         if (isInform){
             // 输出当前摄像机的属性 用于后续设置更好的初始化摄像机坐标
             cout << "相机属性：" << endl;
@@ -152,14 +184,42 @@ int main()
             isInform = 0;
         }
 
+        //绘制gui
+        ImGui::Begin("My Window");
+        char buf[256]; // Declare the variable "buf"
+        float f = 0.0f; // Declare the variable "f"
+        ImGui::Text("Hello, world %d", 123);
+        if (ImGui::Button("Save"));
+        ImGui::InputText("string", buf, IM_ARRAYSIZE(buf));
+        ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
+        ImGui::End();
 
+        // Rendering
+        ImGui::Render();
+        int display_w, display_h;
+        glfwGetFramebufferSize(window, &display_w, &display_h);
+        glViewport(0, 0, display_w, display_h);
+        glClear(GL_COLOR_BUFFER_BIT);
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         // 绘制
         scene.draw(lightPipe_id, phongPipe_id);
         glfwSwapBuffers(window);
         glfwPollEvents();
+
+
+
+
     }
     
+    //----------------------------------------
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+    //------------------------------------------
+
+
+
     glfwTerminate();
     return 0;
 }
